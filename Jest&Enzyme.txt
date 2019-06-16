@@ -1,0 +1,26 @@
+JEST:
+ offers feature like snapshot testing
+
+
+
+react testing library, enzyme, snapshot testing
+
+enzyme is recommended by react as it has simple api's.
+
+
+shallow vs Mount in exzyme:
+	shallow:
+		no DOM is create, only the component to be tested is rendered in the memory.
+		no child components are rendered.
+	Mount:
+		actual DOM is rendered
+		child components are rendered
+
+
+React testing Library:
+	this tests the components based on what user see. example text on the button, text on h1, h2 etc.
+	it uses queries like getByText(), getByTitle() etc.
+
+
+Testing an action:
+		

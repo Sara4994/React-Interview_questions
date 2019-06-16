@@ -1,0 +1,134 @@
+ lifecycle methods: Component Creation
+
+	recent update:
+		constructor() --> getDerivedStateFromProps --> render() --> Renders the child components --> componentDidMount()
+
+	legacy:
+		constructor() --> componentWillMount() --> render() --> Renders the child components --> componentDidMount()
+
+	constructor():
+		this is called at first when the class is executed. this is a default es6 feature and this function will be executed automatically.
+		calling super in the constructor of a subclass is an es6 feature, which will help subclass to use data from parent.
+		super(props) is called inside constructor or else console.log(this.props) will throw undefined.
+
+		we can create props inside constructor and have "super(props)" to use the props from the parent component.
+		Do's:
+		   set up state
+		Dont:
+		   Dont write side-effect logics here in constructor(Side-effect - Calling a webserver to get data and updating the state),
+	as it make the component to re-render and make performance issue.
+
+	getDerivedStateFromProps():
+		If the props passed from the parent component changes and you want update the internal state of the child 
+	component then you can use this method to sync the internal state with the prop changes.
+		
+		eg: static getDerivedStateFromProps(nextProps, prevState){}
+
+	componentWillMount() :
+		this method will execute after constructor and this helps in making some last minute optimization and to update state.
+		Do's:
+		   Update state, last minute optimization
+		Dont:
+		   Dont write side-effect logics here in constructor(Side-effect - Calling a webserver to get data and updating the state),
+	as it make the component to re-render and make performance issue. 
+
+	Render():
+		Here the component will be rendered on the browser
+		it also has the info about child components as well
+
+	Renders the child components
+
+	componentDidMount():
+		Do's: You can do side-effects here
+		Dont: dont update state here as it may re-render the component.
+
+	componentWillUnMount():
+		This method will be called in a component when a particular component is removed from the DOM.
+		For eg: if a component is removed upon a button click then the logic present inside the componentWillUnMount() of that component will be executed and then
+	the component would be removed from the DOM.
+
+
+
+lifecycle methods: Component Updation- triggered by parent changes
+
+	recent update(16.3>):
+		getDerivedStateFromProps --> shouldComponentUpdate() --> render() --> getSnapshotBeforeUpdate() --> renders child components --> componentDidUpdate()
+
+		
+	Legacy:
+		componentWillRecieveProps() --> shouldComponentUpdate() --> componentWillUpdate() --> render() --> Renders child components --> componentDidUpdate()
+
+	componentWillRecieveProps(nextProps):
+		Here the component recieves props from the parent component. also if the child component is maintaining a state, which is updated by the props
+	from the parent component then the corresponding props changes should be synched with the local state of the child component.
+
+		Do's: sync the local state of the child component with the props
+		Dont: dont do side effect logics
+	
+	shouldComponentUpdate(nextProps, nextState):
+		This method helps in deciding whether the props changes of the parent component to be synched with the local state of the child component or not.
+		You can decide the updation of state, by comparing the current instance of props with the older instance. if it differs then you can sync it.
+		if the function returns true, the props changes can be synced with the state, else it can be ignored. it depends on our need.
+
+		Do's: you can decide whether the state should be synched with props or not
+		Dont: dont do side effect logics here
+	
+	componentWillUpdate(nextProps, nextState):
+		This method will be executed when we return true on shouldComponentUpdate() method.
+		
+		Do's: sync your state to props
+		Dont: dont do side effect logics here.
+	
+	componentDidUpdate():
+		Do's: you can make side effect logics here
+		Dont: dont update the state as it may re-render the component.
+
+
+lifecycle methods: Component Updation- triggered by state changes
+		shouldComponentUpdate() --> componentWillUpdate() --> render() --> Renders child component --> componentDidUpdate()
+
+
+useEffect() :
+	it is the function combination of componentDidMount, componentDidUpdate, componentWillUnMount()
+
+	without cleanUp:
+		If incase you want a certain code to run after every render of the component, then you use both the
+	componentDidMount and ComponentDidUpdate methods in the class components.
+
+		whereas in functional component you can use useEffect which is a combination of both componentDidMount and
+	ComponentDidUpdate, the function inside the effect runs on every render(including first render).
+
+		If you want to use componentDidMount alone using useEffect, then pass empty array as argument in useEffect
+			useEffect(() => {},[])
+
+	with cleanUp:
+		sometimes to want to do cleanUp, or unsbscribe from the data source while the component is unmounted,
+	In that case we use componentDidMount to subscribe and componentWillUnMount to unsubscribe from it.
+
+	using useEffect can perform both using single function.
+
+	Running an effect only when a value changes:
+		useEffect(() => { },[count]);
+
+
+React.Memo:
+	It is used in the functional components, which does the purpose of shouldComponentUpdate.
+	React.memo renders the component only when there is a change in the props passed.
+		React.memo(<componentName>)
+
+shouldComponentUpdate vs purecomponent:
+	generally we use shouldComponentUpdate to compare the previous and current instance of the props, we write a condition 
+inside the shoudlComponentUpdate method. It will be fine if we check the few props in a component.
+
+	consider we have more props in our component and writing checks for all the props in the component would be difficult.
+so extend the component with PureComponent. this will check all the props in the component.
+
+					
+
+
+
+	
+	
+	
+
+

@@ -1,0 +1,38 @@
+SSR: Server Side Rendering
+
+Drawbacks of client side rendering:
+	To load a page on the browser, browser has to make multiple requests to the server to load one page
+	client--->Request for page --(pause)--> Request for Js --(pause)--> bootstraps react and gets data from json --> Server
+	
+	Here, there has to be multiple requests to load a page which makes loading application very late.
+
+Advantages of SSR:
+	Here, once the URL is hit by the user in the browser, the request is made to the server. There the server will
+send the HTML with atleast a minimal HTML content to the browser until rest of the element gets loaded on the client.
+	so, the user would be able to see something on the browser instead of blank, loading page.
+
+	1)Improved performance
+	2)better for SEO
+
+
+Architecture of SSR:
+	Maintain two layers of servers at the backend(One for SSR and another to handle backend server logics).
+	It is good to have two different servers because, executing a react application at the server side is not a perfect thing
+as sometimes it may slow down the server. if we were to put the SSR logic and the api logics on the same server, it may
+slow down the server completely.
+
+How JSX is processed in the client side:
+
+(header.js,button.js,sample.js) --> Index.js --> Webpack --> babel --> bundle.js
+
+
+SSR, Universal JS, Isomorphic JS
+SSR - Generate HTML on the server.
+Universal JS - The same code runs on the server and the browser
+Isomorphic JS - The same code runs on the server and the browser
+
+
+ReactDOM.hydrate vs ReactDOM.render:
+	Render method will render the DOM elements if there is a change.
+	hydrate method is used with SSR. it helps in adding the event handlers to the DOM which is already as HTML from the server.
+the purpose of hydrate is to add the event handlers to the DOM existing.

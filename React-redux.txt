@@ -1,0 +1,223 @@
+why Redux?
+	One Store
+	Reduced Boilerplate
+	Isomorphic/Universal Js
+	Immutable store
+	Hot Reloading
+	Time-travel debugging
+	small
+
+4 Ways to create components
+	createClass
+	ES class
+	Function
+	Arrow function
+	
+	createClase:
+		var HelloWorld = React.createClass({
+		render: function() {
+			return <h1>Hello</h1>
+			}
+		})
+
+Functional Components:
+	classes may be removed in future
+	Easier to understand
+	avoid this keyword problems
+	leass transpiled code after bundling
+	Easy to test
+	Perfomance
+
+container vs presentational components:
+	container component: it has minimal markup or no markup.
+			     mainly concerned on data passing and contains logic. 
+			     Know about redux.
+			     typically statefull.
+
+	Presentational component:
+			    full of markups.
+             		    Receives data and actions via props
+			    knows doesnt about redux.
+		            typically not statefull.	
+
+	container 		|	Presentational
+	Smart			|	Dumb
+	StateFull		|	Stateless
+	Controller View		|	View
+
+What is Reducer?
+	It is a fuction which takes in intial state and action, provides new state.
+
+What is store?
+	One store that has common state of the application
+
+what is action?
+	It is something that is triggered on some event which has type and payload to update the state
+
+Flux vs Redux?
+	Redux  has Reducers, containers, immutability while flux dont have reducers.
+	flux:
+	     store contains state and change logics.
+	     flux has multiple stores.
+	     difficulty in communication between stores.
+	     React component subscribe to store
+	     state is mutable.
+
+	Redux:
+	      store contains only state and change logics are present in reducer.
+	      It has only one store.
+	      here it doesnt have that problem, since it has one store.
+	      Here is uses connect from react-redux to connect with store.
+	      state is immutable.
+
+
+Redux flow:
+	action --> reducer --> store --> react Component
+
+Immutably updating the state:
+	it gives clarity and improves performance
+	Performance:
+		consider if you have more number of properties in a state, updating the state mutably it will check
+	every property present in the state and update the changes. if you update immutably then it will compare
+	the previous instance of the state and update the changes faster.
+	
+	ways to update state immutably:
+		object.assign()
+		spread operator
+		immutable.js
+
+Things should be done in reducers:
+	dont mutate the state.
+	dont perform side effects(api calls)
+	dont call non-pure functions(eg: math.random)
+
+Things to remember:
+	when react is connected to redux, the initial state values are taken from default switch case present in the reducer.
+then the state is altered based on the action type passed.
+
+ways to handle mapDispatchToProps:
+	ignore the function mapDispatchToProps 
+	
+	(in order to call the action this.props.dispatch(loadData()))
+
+	Manually call the action 
+		const mapDispatchToProps = (dispatch) => {
+			return {
+			        loadData:  () => {
+					dispatch(loadData())
+				        }
+				}
+		}
+
+
+		this.props.loadData();
+
+	use bindActionCreators:
+		const mapDispatchToProps = (dispatch) => {
+			return {
+				actions: bindActionCreators(action,dispatch)
+				}
+		}
+		
+
+		this.props.action.loadData
+	
+	As an Object:
+		const mapDispatchToProps = (dispatch) => {
+			return {
+				loadData
+				}
+		}
+		
+		this.props.loadData
+
+
+Initial redux setup:
+	create action
+	create reducer
+	create root reducer
+	configure store
+	instantiate store
+	connect component
+	pass props via connect
+	dispatch action
+
+
+Provider and connect are HOC present in react-redux, that allows connection between react and redux.
+
+	
+REDUX MIDDLEWARES:
+	redux-saga, redux-thunk, redux-promise, redux-observable
+
+	it handles:
+		Handles async API calls
+		logging
+		crash reporting
+		routing
+
+	thunk: it is function that returns a function that handles api/async calls
+	sagas: it is js generator function which has multiple yield calls to handle async calls
+
+why to use redux middleware? (check answer for this)
+
+
+
+Sagas:
+
+Iterable, Iterators and generators:
+	Iterables:
+	Arrays, sets are Iterables where as objects are not... arrays have the method symbols.iterator which makes it iterable.
+
+	Iterators:
+	let myArray = [1,2,3,4]
+	let iterator = myArray[Symbol.iterator]();
+	console.log(iterator.next());
+
+	generator:
+	It is a function, which provides the feature of pausing and resuming the execution of function.
+	generator gets one value at a time and pauses, untill it gets results from the first yield.
+	the function will start executing only when next() is called and pauses after that.
+	if we return something inside the generator function then the execution stops there
+	
+	function *generator() {
+	yield 1;
+	yield 2;
+	yield 3;
+	yield 4;
+	}
+	let iterator = generator();
+	console.log(iterator.next());
+	console.log(iterator.next());
+	console.log(iterator.next());
+
+generators in saga:
+	saga uses the concept of generator, where we can pause the execution of the function until the Async action is complete.
+so that, then we can resume the execution once after then Async is complete
+	we have yield call and yeild put in saga
+
+
+configuring saga with redux:
+	import creatSagaMiddleware() from 'redux-saga';
+	
+	let sagaMiddleware = createSagaMiddleware()
+	sagaMiddleware.run(<saga File name>)
+	
+
+
+
+saga vs thunk:
+	Thunks can never act in response to an action. 
+	Redux-Saga, on the other hand, subscribes to the store and can trigger a saga to run or continue when a certain action is dispatched.
+
+
+	thunk is a function that takes some parameter and returns another function which has dispatch and getState in it.
+	export function thunk() {
+		return (dispatch, getState) => {
+			return courseApi.getCourse()
+				.then(data=> {
+					dispatch(setCourse())
+				 }).catch(error => {
+					dispatch(errorPage())
+      				 })
+		}
+	}
