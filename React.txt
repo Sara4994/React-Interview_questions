@@ -1,0 +1,149 @@
+Javascript:
+what is js? --> Single threaded programming language which has single call stack and can handle one thing at a time.
+event loop
+bind in js
+
+find output:
+for(var i=0;i<10;i++){
+	setTimeout(()=> console.log(i),1000)
+}
+output = 10(10times)
+
+for(let i=0;i<10;i++){
+	setTimeout(()=> console.log(i),1000)
+}
+output = 0 to 9
+
+for(var i=0; i<10;i++){
+    (function(j){
+        setTimeout(()=>console.log(j),100);
+    })(i)
+}
+
+output = 0 to 9
+
+
+
+
+
+REACT:
+what is props? which it is immutable/readonly?
+axios vs fetch
+sagas,
+why thunk middleware
+thunks
+y api request on componentDidMount instead componentWillMount
+Presentational and container component
+stateful vs stateless component
+Pure component?
+higher order component vs container component?
+diff algorithm in react?
+setState Asynchronous
+Mount vs render?
+state hoisting in react?
+CORS
+how to increase first time load?
+server side rendering
+react.portals
+higher order component
+functional programming
+attributes of script tag
+noscript tag
+memoization?
+React refs?
+	Acc to react docs,refs are used to get reference to a DOM node or an instance of a component in a React Application 
+	i.e. refs would return the node we are referencing 
+	refer below link:
+	https://hackernoon.com/refs-in-react-all-you-need-to-know-fb9c9e2aeb81
+	https://www.fullstackreact.com/articles/using-refs-in-react/
+
+When Should I use Refs?
+	We advise to use refs in the following situations:
+
+	Integrating with third-party DOM libraries.
+	Triggering imperative animations.
+	Managing focus, text selection, or media playback.
+
+React Portals?
+	https://medium.com/@siobhanpmahoney/portals-in-react-js-5d98bb89797c
+	Portals are introduced in react 16> which is used to render the child components into different parent component
+instead of rendering in its own parent.
+	eg: Modal, hoverCards
+	
+	ReactDom.createPortal(<child component>, <Container/ Parent component>)
+
+HOC:
+	https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006
+	A higher-order component in React is a pattern used to share common functionality between components without repeating code.
+	A higher-order component is actually not a component though, it is a function. 
+	A HOC function takes a component as an argument and returns a component. 	
+	It transforms a component into another component and adds additional data or functionality.
+	It is the example of currying in JS.
+	HOC provides reusability.
+
+Context:
+	context api is used to pass the props to child components.
+	If a prop is used by multiple child component then we can use context api.
+	const passingContext= React.createContext
+	<passingContext.provider value={40}>
+		<childComponent />
+	<passingContext.provider />
+
+	inside child component:
+		<passingContext.consumer>
+			{value}
+		<passingContext.consumer />
+
+	useContext:
+		import the context that we created and exported in parent component
+		const value= useContext(value)
+
+useMemo:
+	it allows us to use the memoized value instead rendering the component multiple times
+	useMemo(<div>{value}</div>, [value])
+	the re-render will be passed on the array of dependencies which we pass in. re-render happens only there is a
+change in the array of dependencies.
+
+React.memo:
+	It is HOC which takes in a component and renders if there is change in the result of the function provided there
+is a change in prop passed.
+
+
+
+
+
+
+Redux:
+Why redux? 
+redux is a state management tool which can maintain state as a centralized one so that any component can fetch data from it. if state is maintained inside a component, 
+it will difficult for a larger application which has more components in it. If there are more child components present for a single parent component and state is maintained in the parent.
+passing data from the parent to last child would be difficult. so it is better to use redux which can maintain state and components can fetch from it.
+
+what is dispatch?
+it is something that dispatches an action.
+
+what is action?
+action is something that has type(action type) and payload in it.
+
+what is reducer?
+Reducer is pure function, which takes in initial state of an application and gives out new state after some action is performed on it.
+they specify how the state of an application changes in response to an action sent to the store.
+
+
+what is store?
+store is something that holds the state of an application and there can be only one store in an application.
+
+
+
+
+
+
+
+
+
+
+
+
+
+node:
+event loop in node
